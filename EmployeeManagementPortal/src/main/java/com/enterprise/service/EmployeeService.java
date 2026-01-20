@@ -41,4 +41,13 @@ public class EmployeeService {
 
         return employeeRepository.findAll(pageRequest);
     }
+
+    public List<Employee> getEmployeeByName(String name){
+
+        if (name == null || name.trim().isEmpty()) {
+            return employeeRepository.findAll();
+        }
+        return employeeRepository.findByNameContainingIgnoreCase(name);
+
+    }
 }

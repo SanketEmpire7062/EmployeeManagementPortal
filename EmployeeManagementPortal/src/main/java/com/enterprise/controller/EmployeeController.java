@@ -43,6 +43,13 @@ public class EmployeeController {
 
     }
 
+    @GetMapping("/name")
+    public List<Employee> getEmployeeByName(
+            @RequestParam(required = false) String name
+    ){
+        return employeeService.getEmployeeByName(name);
+    }
+
 
 
 
