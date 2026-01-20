@@ -5,10 +5,14 @@ import com.enterprise.repository.EmployeeRepository;
 import com.enterprise.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+
 
 @RestController
 @RequestMapping("/api/employee")
@@ -44,11 +48,35 @@ public class EmployeeController {
     }
 
     @GetMapping("/name")
-    public List<Employee> getEmployeeByName(
+    public ResponseEntity<?> getEmployeeByName(
             @RequestParam(required = false) String name
     ){
-        return employeeService.getEmployeeByName(name);
+
+        List<Employee> employees = employeeService.getEmployeeByName(name);
+
+        if(employees.isEmpty()){
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
+        }
+        return ResponseEntity.ok(employees);
     }
+
+
+
+    @GetMapping("/department")
+    public ResponseEntity<?> getEmployeeByDepartment(
+            @RequestParam(required = false) String department
+    ){
+        List<Employee> employees = employeeService.getEmployeeByDepartment(department);
+
+        if(employees.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
+        }
+
+        return ResponseEntity.ok(employees);
+
+    }
+
+
 
 
 

@@ -11,7 +11,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Override
     Optional<Employee> findById(Integer integer);
 
-    //partial match
+    //partial match by name
     List<Employee> findByNameContainingIgnoreCase(String name);
+
+    List<Employee> findByDepartmentContainingIgnoreCase(String department);
 
 }
