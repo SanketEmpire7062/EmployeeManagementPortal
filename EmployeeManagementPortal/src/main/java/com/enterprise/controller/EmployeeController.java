@@ -5,10 +5,12 @@ import com.enterprise.repository.EmployeeRepository;
 import com.enterprise.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +76,21 @@ public class EmployeeController {
 
         return ResponseEntity.ok(employees);
 
+    }
+
+    @GetMapping("/joiningdate")
+    public ResponseEntity<?>getEmployeeByJoiningDate(
+            @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date startDate,
+            @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date endDate
+
+    ){
+        List<Employee> employees = employeeService.getEmployeeByJoiningData(startDate, endDate);
+
+        if(employees.isEmpty()){
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
+
+        }
+        return ResponseEntity.ok(employees);
     }
 
 

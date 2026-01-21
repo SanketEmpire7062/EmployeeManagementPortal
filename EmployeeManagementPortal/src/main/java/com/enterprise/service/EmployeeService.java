@@ -1,16 +1,14 @@
 package com.enterprise.service;
 
 import com.enterprise.entity.Employee;
-import com.enterprise.exception.ResourceNotFoundException;
 import com.enterprise.repository.EmployeeRepository;
 import org.springframework.data.domain.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +54,17 @@ public class EmployeeService {
     public List<Employee> getEmployeeByDepartment(String department){
 
         return employeeRepository.findByDepartmentContainingIgnoreCase(department);
+    }
+
+    // getting employee by given date range
+    public List<Employee> getEmployeeByJoiningData(Date startDate, Date endDate){
+
+
+            if (endDate.before(startDate)) {
+                throw new IllegalArgumentException("end date must not be before start date");
+            }
+
+        return employeeRepository.findByJoiningDateBetween(startDate, endDate);
     }
 
 

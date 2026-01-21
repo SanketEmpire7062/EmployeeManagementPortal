@@ -3,6 +3,7 @@ package com.enterprise.repository;
 import com.enterprise.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,5 +16,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     List<Employee> findByNameContainingIgnoreCase(String name);
 
     List<Employee> findByDepartmentContainingIgnoreCase(String department);
+
+    List<Employee> findByJoiningDateBetween(Date startDate, Date endDate);
 
 }
